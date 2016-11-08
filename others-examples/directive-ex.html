@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>directive example</title>
+
+    <style type="text/css">
+        .custombtn{
+            background-color:dodgerblue;
+        }
+    </style>
+</head>
+<body ng-app="myApp">
+    <div>
+        <custom-button>Click me</custom-button>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script>
+        var myApp = angular.module('myApp', []);
+        myApp.directive('customButton', function () { // ****** 디렉티브 이름에 대문자 사용시 dom에서는 -(하이픈으로) 인식한다
+            return {
+                /*
+                    'A'라고 지정하면 속성 으로만 사용 ex. <a custom-button>Click me</a>,
+                    ‘E’는 요소 ex.   <custom-button>Click me</custom-button>
+                    ‘C’는 클래스 ex.  <a class="custom-button">Click me</a>
+                    디폴트는 'EA'
+                */
+                restrict: 'E',
+                replace: true, // 기존의 tag정보를 template로 교체할건지 false는 기존 태그안에 template 삽입
+                transclude: true, // false 시 click me 라는 문구가 템플릿으로 복사되지 않는다.
+                template: '<a href="" class="custombtn" ng-transclude></a>', //templateUrl을 사용하여 별도의 파일로 분류할 수 도 있다.
+                link: function (scope, element, attrs) {
+                    // DOM 조작과 이벤트 설정은 여기서!
+                }
+            };
+        });
+    </script>
+</body>
+</html>

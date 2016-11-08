@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS Basic</title>
+</head>
+<body ng-controller ="PeopleController">
+<!--{{person.name}} lives in {{person.city}}-->
+
+    <h1>주소록</h1>
+    <center><button ng-click="ShowForm()" ng-hide="formVisibility">Add Contact</button></center>
+    <div ng-show="formVisibility" class="wrapper">
+        <h2>Add a Contact</h2>
+        Name : <input type="text" ng-model="newPerson.name"/>
+        Phone : <input type="text" ng-model="newPerson.phone"/>
+        City : <input type="text" ng-model="newPerson.city"/>
+            <button ng-click="Save()">Save</button>
+        <div ng-repeat="person in people| orderBy:'name'" class="contact-item">
+            <div>{{person.name}} - {{person.phone}}</div>
+            <div>{{person.city}}</div>
+        </div>
+    </div>
+
+<!--------------------------------------------------------------------------->
+    <script>
+        function PeopleController($scope) {
+            /*
+            $scope.person = {
+                name : "park",
+                city : "seoul"
+            };
+            */
+
+            $scope.people = [
+                {name:"park", city:"성주", phone:"01097871903"},
+                {name:"jeon",city:"서울", phone:"01000000000"},
+                {name:"ki",city:"양구", phone:"01072471202"},
+                {name:"koo",city:"LA", phone:"01001111111"},
+                {name:"bang",city:"할렘스트리트", phone:"01012312332"},
+            ];
+
+            $scope.Save = function () {
+                $scope.people.push({name : $scope.newPerson.name, city:$scope.newPerson.city, phone:$scope.newPerson.phone});
+                $scope.formVisibility=false;
+            }
+
+            $scope.ShowForm=function () {
+              $scope.formVisibility=true;
+            };
+        }
+
+    </script>
+    <script src="node_modules/angular/lib/angular.min.js"></script>
+</body>
+</html>

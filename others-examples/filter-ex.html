@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>filter</title>
+</head>
+<body ng-app="filterTest">
+
+    <div ng-controller="MainController">
+        <p>{{value}}</p>
+        <p>{{value | replaceToBoolean}}</p>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script>
+        var filterTest = angular.module('filterTest',[]);
+
+        /*
+            데이터를 특별히 가공하고 싶을 때 사용!!!
+        */
+        filterTest.filter('replaceToBoolean', function () {
+            return function (item) {
+                if(item>10){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
+        filterTest.controller('MainController', ['$scope', function ($scope) {
+            $scope.value = 9;
+        }]);
+    </script>
+</body>
+</html>
